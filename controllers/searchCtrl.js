@@ -21,9 +21,9 @@ export default {
         res.status(500).json({ error: err });
       });
   },
-// Following the same example from Santiago's searchCtrl.js file.
+  // Following the same example from Santiago's searchCtrl.js file.
   searchById: (req, res) => {
-    ItemModel.find({ id: req.params.searchQuery })
+    ItemModel.find({ _id: req.params.searchQuery })
       .then((result) => {
         if (!result.length) {
           res.status(200).json({ message: "No results found!" });
@@ -36,8 +36,22 @@ export default {
       });
   },
 
+  getAllProducts: (req, res) => {
+    ItemModel.find()
+      .then((result) => {
+        if (!result.length) {
+          res.status(200).json({ message: "No products found!" });
+        } else {
+          res.status(200).json({ result });
+        }
+      })
+      .catch((err) => {
+        res.status(500).json({ error: err });
+      });
+  },
+
   searchByCategory: (req, res) => {
-    ItemModel.find({ Category: req.params.searchQuery })
+    ItemModel.find({ category: req.params.searchQuery })
       .then((result) => {
         if (!result.length) {
           res.status(200).json({ message: "No results found!" });
@@ -61,5 +75,5 @@ export default {
       .catch((err) => {
         res.status(500).json({ error: err });
       });
-  }
+  },
 };

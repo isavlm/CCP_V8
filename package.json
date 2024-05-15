@@ -34,7 +34,7 @@
     "mocha": "^10.4.0",
     "nyc": "^14.1.1",
     "request": "^2.88.0",
-    "request-promise": "^0.0.1",
+    "request-promise": "^4.2.5",
     "rimraf": "^3.0.0",
     "standard": "^14.3.1"
   },

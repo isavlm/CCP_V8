@@ -23,8 +23,9 @@ export default {
         itemData.save().then(result => {
           res.status(200).json({ message: 'Data inserted successfully!', result })
         })
+        console.log(itemData);
       } else {
-        res.status(200).json({ message: 'Name should be unique!' })
+        res.status(400).json({ message: 'Name should be unique!' })
       }
     }).catch(err => {
       res.status(500).json({ error: err })

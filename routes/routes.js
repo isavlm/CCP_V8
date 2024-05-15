@@ -8,6 +8,9 @@ const routes = (router) => {
 //All GET or request to READ
   router.route('/basePage')
     .get(baseCtrl.basePage)
+  router
+    .route("/products") // goes to getAllProducts
+    .get(searchCtrl.getAllProducts);
 //Search request (also a GET)
   router.route('/search/name/:searchQuery') // goes to search ByName
     .get(searchCtrl.searchByName)
@@ -20,6 +23,10 @@ const routes = (router) => {
   router
     .route("/search/category/:searchQuery") // goes to search ByCategory
     .get(searchCtrl.searchByCategory);
+  router
+    .route("/products") // goes to getAllProducts
+    .get(searchCtrl.getAllProducts);
+
 
 // ALL POST or request to Insert/Create 
   router
