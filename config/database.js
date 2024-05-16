@@ -7,8 +7,9 @@ const dbOptions = {
   useNewUrlParser: true,
   useCreateIndex: true,
   useUnifiedTopology: true,
-  useFindAndModify: false
-}
+  useFindAndModify: false,
+  family: 4,
+};
 
 const dbConnection = mongoose.createConnection(dbURL, dbOptions)
 
