@@ -42,7 +42,7 @@ export default {
         if (!result.length) {
           res.status(200).json({ message: "No products found!" });
         } else {
-          res.status(200).json({ result });
+          res.status(200).json({ products: result });
         }
       })
       .catch((err) => {
@@ -64,7 +64,7 @@ export default {
       });
   },
   searchByBrand: (req, res) => {
-    ItemModel.find({ Brand: req.params.searchQuery })
+    ItemModel.find({ brandname: req.params.searchQuery })
       .then((result) => {
         if (!result.length) {
           res.status(200).json({ message: "No results found!" });
