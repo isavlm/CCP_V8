@@ -1,0 +1,155 @@
+<p>Product Catalog<p>
+<p>App set up successfully</p>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Catalog API Documentation</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        h1, h2, h3 {
+            color: #333;
+        }
+        pre {
+            background-color: #f4f4f4;
+            padding: 10px;
+            border: 1px solid #ddd;
+            overflow: auto;
+        }
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+        }
+        .column {
+            flex: 1;
+            padding: 10px;
+        }
+        .explanation {
+            line-height: 1.2;
+        }
+        a {
+            color: #3498db;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <h1>Product Catalog API Documentation</h1>
+
+    <h2>Introduction</h2>
+    <p>This document outlines the API endpoints and functionality of a product catalog backend built with Node.js, Express, and MongoDB. The API provides CRUD (Create, Read, Update, Delete) operations for managing products. While it's a best practice, this API doesn't have an authorization protocol. However, rest assured, future versions may include one.</p>
+    <p>This is the current version of this challenge, created after compiling everything I learned from books, videos, and articles. I have also followed most of Santiago's code, only making changes when necessary to complete the tasks.</p>
+    <p>I am using S.O.L.I.D as my method, and you can see that when you check the files in the folder controllers. Each file represents one request from our application, with searchCtrl.js having multiple (but separated) requests (all, name, ID, category, brand). I also decided against creating a separate file just for getAllProducts, as I was trying to keep most of the GET requests together.</p>
+
+    <h2>Structure</h2>
+    <div class="container">
+        <div class="column">
+            <pre>
+CCP_V8/
+│
+├── config/
+│   ├── app.js
+│   └── database.js
+├── data/
+├── data_test/
+├── controllers/
+│   ├── baseCtrl.js
+│   ├── deleteCtrl.js
+│   ├── insertionCtrl.js
+│   ├── searchCtrl.js
+│   └── updateCtrl.js
+├── routes/
+│   └── routes.js
+├── schema/
+│   └── itemSchema.js
+├── test/
+│   └── test.js
+├── .env
+├── .gitignore
+├── package.json
+├── README.md
+└── index.js
+            </pre>
+        </div>
+        <div class="column explanation">
+            <p><strong>config/:</strong> Contains configuration files for the application.</p>
+            <p>&nbsp;&nbsp;&nbsp;├── <strong>app.js:</strong> Application configuration.</p>
+            <p>&nbsp;&nbsp;&nbsp;└── <strong>database.js:</strong> Database configuration.</p>
+            <p><strong>controllers/:</strong> Contains controllers for handling different API requests.</p>
+            <p>&nbsp;&nbsp;&nbsp;├── <strong>baseCtrl.js:</strong> Base controller.</p>
+            <p>&nbsp;&nbsp;&nbsp;├── <strong>deleteCtrl.js:</strong> Handles deletion of products.</p>
+            <p>&nbsp;&nbsp;&nbsp;├── <strong>insertionCtrl.js:</strong> Handles insertion of products.</p>
+            <p>&nbsp;&nbsp;&nbsp;├── <strong>searchCtrl.js:</strong> Handles search requests (by name, ID, category, brand).</p>
+            <p>&nbsp;&nbsp;&nbsp;└── <strong>updateCtrl.js:</strong> Handles updates to products.</p>
+            <p><strong>routes/:</strong> Contains routing information.</p>
+            <p>&nbsp;&nbsp;&nbsp;└── <strong>routes.js:</strong> Defines the routes for the API endpoints.</p>
+            <p><strong>schema/:</strong> Contains schema definitions.</p>
+            <p>&nbsp;&nbsp;&nbsp;└── <strong>itemSchema.js:</strong> Defines the schema for product items.</p>
+            <p><strong>test/:</strong> Contains tests for the application.</p>
+            <p>&nbsp;&nbsp;&nbsp;└── <strong>test.js:</strong> Test cases for all methods.</p>
+        </div>
+    </div>
+
+    <h2>Running Locally</h2>
+    <h3>Create an <code>.env</code> File</h3>
+    <p>The <code>.env</code> file holds the important variables for the whole application which include the database URL, database port, application port, etc.</p>
+    <pre>
+HOST='localhost'
+PORT='3180' # PORT 5000 was already in use on my machine.
+MONGO_URL='localhost'
+MONGO_PORT=27017
+MONGO_DBNAME='product-catalog'
+    </pre>
+
+    <h3>Base URL</h3>
+    <p>Base URL for all API endpoints:</p>
+    <p><a href="http://localhost:3110">http://localhost:3110</a></p>
+
+    <h2>API Endpoints</h2>
+    <ul>
+        <li><a href="http://localhost:3110/basePage">GET /basePage</a></li>
+        <li><a href="http://localhost:3110/">GET /</a></li>
+        <li><a href="http://localhost:3110/search/name/:searchQuery">GET /search/name/:searchQuery</a></li>
+        <li><a href="http://localhost:3110/search/id/:searchQuery">GET /search/id/:searchQuery</a></li>
+        <li><a href="http://localhost:3110/search/brand/:searchQuery">GET /search/brand/:searchQuery</a></li>
+        <li><a href="http://localhost:3110/search/category/:searchQuery">GET /search/category/:searchQuery</a></li>
+        <li><a href="http://localhost:3110/update/:productId">PUT /update/:productId</a></li>
+        <li><a href="http://localhost:3110/delete/:productId">DELETE /delete/:productId</a></li>
+        <li><a href="http://localhost:3110/products">POST /products</a></li>
+    </ul>
+    <p>Please be aware that you must use the unique ID created by MongoDB to update and delete a product.</p>
+    <p>Include the param when searching, updating, or deleting a product and finish your request. Like:</p>
+    <p><a href="http://localhost:3110/search/name/HP1">http://localhost:3110/search/name/HP1</a></p>
+    <p>HP1, in this case, is a product with the name HP1.</p>
+
+    <h2>Testing the Application</h2>
+    <p>To test this application, run the following command:</p>
+    <pre>npm test</pre>
+    <p>The program will test all nine methods (base page, insert, search by name, _id, category, brand name, as well as update and delete) in about one second.</p>
+    <p>To run these tests, I created a function to generate a random number for the 'TestProduct—'. I used ".date" and Math.random to generate random numbers between 0 and 9999 and keep the product names as unique as possible.</p>
+
+    <h2>References</h2>
+    <ul>
+        <li><a href="https://example.com">Conventions for app.js, index.js, and server.js in Node.js</a></li>
+        <li><a href="https://example.com">Why do people name their files index.html?</a></li>
+        <li><a href="https://example.com">Understanding the Factory Pattern with real-world example</a></li>
+        <li><a href="https://example.com">7 Node.js Design Patterns Every Developer Should Know</a></li>
+        <li><a href="https://example.com">Factory Method - Refactoring Guru</a></li>
+        <li><a href="https://www.udemy.com/course/nodejs-express-mongodb-bootcamp/">Node.js, Express, MongoDB & More: The Complete Bootcamp 2024</a></li>
+        <li><a href="https://www.tutorialsteacher.com/nodejs/learn-node-js-in-30-days">Learn Node JS in 30 days: A Tutorial for Beginners</a></li>
+    </ul>
+    <p>The image was used for testing purposes, and no copyright infringement was intended.</p>
+    <p>Krause, Martin. <em>Master the Full Stack with TypeScript, React, Next.js, MongoDB, and Docker</em>. January 2024, 344 pp. ISBN-13: 9781718503281.</p>
+    <p>Sarrion, Eric. <em>JavaScript from Frontend to Backend: Learn full stack JavaScript development using the MEVN stack with quick and easy steps</em>.</p>
+
+    <h2>Acknowledgements</h2>
+    <p>I want to thank Sanjay for the opportunity and Jean, Santiago, and Nithya, who answered all my questions. Also, my husband and sister both for patiently listening to me complain, stress, and threaten to give up, knowing that I would not do that. And my dog, who stayed by my side all these weeks even though I would not stop to play fetch.</p>
+</body>
+</html>

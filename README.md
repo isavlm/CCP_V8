@@ -1,139 +1,120 @@
-# Product Catalog
 
-### Getting Started
-In order to run this project locally you need to install the next dependencies.
+# Product Catalog API Documentation
 
-- Mongodb
-- Node
+## Introduction
 
-Install all the dependencies (including the dev dependencies) using the `npm install` or `npm i` command. Once the dependencies are installed, use `npm start` to start the server.
+This document outlines the API endpoints and functionality of a product catalog backend built with Node.js, Express, and MongoDB. The API provides CRUD (Create, Read, Update, Delete) operations for managing products. Currently, the API does not have an authorization protocol, but future versions may include one.
 
-Use an API testing tool like [Postman](https://www.getpostman.com/downloads/) or [Insomnia](https://insomnia.rest/download/) to send/receive HTTP requests.
+This project follows the S.O.L.I.D principles. Each file in the `controllers` folder represents a single responsibility, ensuring a clean and maintainable codebase.
+Please note that the code used in this application was heavily based on (@Santiago220991) Santiago Cárdenas's code.
+
+## Project Structure
+
+CCP_V8/
+│
+├── config/
+│   ├── app.js
+│   └── database.js
+├── data/
+├── data_test/
+├── controllers/
+│   ├── baseCtrl.js
+│   ├── deleteCtrl.js
+│   ├── insertionCtrl.js
+│   ├── searchCtrl.js
+│   └── updateCtrl.js
+├── routes/
+│   └── routes.js
+├── schema/
+│   └── itemSchema.js
+├── test/
+│   └── test.js
+├── .env
+├── .gitignore
+├── package.json
+├── README.md
+└── index.js
 
 
-### Running locally
-#### Create an `.env` file
-The `.env` file holds the important variables for the whole application which include the database URL, database port, application port, etc.
-Include the next variables in your .env file.
-```
+### Explanation
+
+- **config/**: Contains configuration files for the application.
+  - `app.js`: Application configuration.
+  - `database.js`: Database configuration.
+- **controllers/**: Contains controllers for handling different API requests.
+  - `baseCtrl.js`: Base controller.
+  - `deleteCtrl.js`: Handles deletion of products.
+  - `insertionCtrl.js`: Handles insertion of products.
+  - `searchCtrl.js`: Handles search requests (by name, ID, category, brand).
+  - `updateCtrl.js`: Handles updates to products.
+- **routes/**: Contains routing information.
+  - `routes.js`: Defines the routes for the API endpoints.
+- **schema/**: Contains schema definitions.
+  - `itemSchema.js`: Defines the schema for product items.
+- **test/**: Contains tests for the application.
+  - `test.js`: Test cases for all methods.
+
+## Running Locally
+
+### Create an `.env` File
+
+The `.env` file holds important variables for the application, including the database URL, database port, application port, etc.
+
+
 HOST='localhost'
-PORT='5000'
-
+PORT='3180'  # PORT 5000 was already in use on my machine.
 MONGO_URL='localhost'
 MONGO_PORT=27017
 MONGO_DBNAME='product-catalog'
-```
-
-#### npm scripts
-The `package.json` file contains five scripts for running locally: `linter`, `test`, `coverage`, `build` & `start`.
-
-- `"linter": "standard --fix"`
-
-Runs the StandardJS linter along with the `--fix` flag, which lints code to a great extent. The traceback (if one shows up) is the list of errors that need to be fixed manually.
-
-- `"test": "mocha --require @babel/register --timeout 5000 --exit"`
-
-Runs **only** the tests.
-
-- `"coverage": "nyc --reporter=text mocha --require @babel/register --timeout 5000 --exit"`
-
-Runs the test coverage & shows up detailed report.
-
-- `"build": "rimraf dist/ && babel ./ --out-dir dist/ --copy-files"`
-
-Builds the project.
-
-- `"start": "npm run build && node dist/index.js --no-deprecation"`
-
-First builds and then starts the server.
-
-### API endpoints
-#### 1. `/insert`
-```
-Request type: POST
-Data parameters: name, category, brandName, images
-```
-
-#### 2. `/search`
-##### 2.1. By name (/search/name/:searchQuery)
-```
-Request type: GET
-Data parameters: name
-```
-
-## Challenge Tasks
-
-### 1 Create an endpoint to delete a product
-
-#### Description
-
-It is necessary to implement an entry point to delete the information of a previously existing product.
-
-For this implementation, a route must be created.
-
-#### Acceptance criteria
-
-A product that previously exists should be removed from the database.
-
-### 2 Create an endpoint to edit a product
-
-#### Description
-
-It is necessary to implement an entry point to change the information of a previously existing product.
-
-For this implementation, a route must be created.
-
-#### Acceptance criteria
-
-A product should be saved in the database and the following attributes can be changed:
-
-- Category
-- Brandname
-- Images
 
 
-### 3 Create an endpoint to get all the products 
+### Base URL
 
-#### Description
-
-It is necessary to implement an entry point to get all the products:
-
-For this implementation, a route must be created.
-
-#### Acceptance criteria
-
-The endpoint retrieves all the products that match a specific status.
+The base URL for all API endpoints is:
 
 
-### 4 Create an endpoint to filter products by category
-
-#### Description
-
-It is necessary to implement an entry point to filter products by category:
-
-For this implementation, a route must be created.
-
-#### Acceptance criteria
-
-The endpoint retrieves all the products that match a specific category.
+http://localhost:3110
 
 
-### 5 Create an endpoint to filter products by brandname
+## API Endpoints
 
-#### Description
+- `GET /basePage`: Base page of the API.
+- `GET /`: Root endpoint.
+- `GET /search/name/:searchQuery`: Search by product name.
+- `GET /search/id/:searchQuery`: Search by product ID.
+- `GET /search/brand/:searchQuery`: Search by product brand.
+- `GET /search/category/:searchQuery`: Search by product category.
+- `PUT /update/:productId`: Update a product.
+- `DELETE /delete/:productId`: Delete a product.
+- `POST /products`: Add a new product.
 
-It is necessary to implement an entry point to filter products by brandname:
+**Note**: Use the unique ID created by MongoDB for updating and deleting a product. Include the appropriate parameter when searching, updating, or deleting a product.
 
-For this implementation, a route must be created.
-
-#### Acceptance criteria
-
-The endpoint retrieves all the products that match a specific brandname.
+Example:
 
 
-### 6 Add tests for the product routes
+http://localhost:3110/search/name/HP1
 
-#### Description
 
-Add test for the enpoints created in the routes.js file.
-# CCP_V8
+## Testing the Application
+
+To test this application, run:
+
+mongod --dbpath data_test   
+
+
+npm test
+
+
+control c 
+
+
+To run the test you may need give mongod a path to the data_test folder in one terminal window and npm test in another. Close the db after tests if necessary.
+
+The tests will cover all nine methods (base page, insert, search by name, ID, category, brand, update, and delete) and execute in about one second. The test product names are generated using a combination of date and random numbers to ensure uniqueness.
+
+
+
+
+## References
+See basePage for all references. 
